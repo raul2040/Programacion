@@ -1,0 +1,7 @@
+Concluye:
+
+¿Qué problemas presenta el código? 
+
+¿Es SOLID?
+
+¿Qué problemas presentan los casos test así formateados?

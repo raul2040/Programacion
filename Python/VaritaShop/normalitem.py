@@ -1,0 +1,1 @@
+class normalItem(Item, Interfaz)
