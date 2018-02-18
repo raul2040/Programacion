@@ -31,6 +31,10 @@ public class Wallet {
 		this.address = address;
 	}
 	
+	public void setBalance() {
+		balance = total_input - total_output;
+	}
+	
 	public PublicKey getAddress() {
 		return this.address;
 	}
@@ -55,11 +59,7 @@ public class Wallet {
 		this.outputTransactions = outputTransactions;
 	}
 	
-	
-	
-	
 // ----- Métodos -----
-	
 
 	public void  generateKeyPair() {
 		KeyPair pair = GenSig.generateKeyPair();
@@ -75,9 +75,8 @@ public class Wallet {
 			if (trx.getpKey_sender().hashCode() == address.hashCode()) {
 				total_output += trx.getPigcoings();	
 			}
-		balance = total_input - total_output;
+		setBalance();
 		}
-		
 	}
 	
 	@Override
