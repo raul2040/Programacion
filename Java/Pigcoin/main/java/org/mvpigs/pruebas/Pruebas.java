@@ -188,5 +188,6 @@ public class Pruebas{
 		*/
 		
 		System.out.println("\n" + ">>>>>>>>>>>> Wallet_1 envia transaccion de pigcoins a wallet_2 >>>>>>>>>>>>" + "\n");
+		
     }
 }

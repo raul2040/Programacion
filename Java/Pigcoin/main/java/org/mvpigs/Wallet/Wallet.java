@@ -31,8 +31,24 @@ public class Wallet {
 		this.address = address;
 	}
 	
+	public void setTotalInput(double total_input) {
+		this.total_input = total_input;
+	}
+	
+	public void setTotalOutput(double total_output) {
+		this.total_output = total_output;
+	}
+	
 	public void setBalance() {
 		balance = total_input - total_output;
+	}
+	
+	public double getTotalInput() {
+		return this.total_input;
+	}
+	
+	public double getTotalOutput() {
+		return this.total_output;
 	}
 	
 	public PublicKey getAddress() {
@@ -68,6 +84,8 @@ public class Wallet {
 	}
 	
 	public void loadCoins(BlockChain bChain) {
+		total_input = 0;
+		total_output = 0;
 		for (Transaction trx:bChain.getBlockChain()) {
 			if (trx.getPkey_recipient().hashCode() == address.hashCode()) {
 				total_input += trx.getPigcoings();
@@ -77,16 +95,6 @@ public class Wallet {
 			}
 		setBalance();
 		}
-	}
-	
-	@Override
-	public String toString() {
-		return "\n"+
-				"Wallet = " + getAddress().hashCode() +
-				"\nTotal input = " + total_input +
-				"\nTotal output = " + total_output +
-				"\nBalance = " + balance +
-				"\n";
 	}
 
 	public void loadInputTransactions(BlockChain blockChain) {
@@ -103,5 +111,35 @@ public class Wallet {
 				outputTransactions.add(trx);
 			}
 		}
+	}
+	
+	public void sendCoins(PublicKey pkey_recipient, double pigcoins, String message, BlockChain blockChain) {
+		Transaction transaction = new Transaction();
+		transaction = new Transaction(transaction.getHash(), transaction.getPrev_hash(), address, pkey_recipient, pigcoins, message);
+		blockChain.addOrigin(transaction);
+	}
+	
+	public void signTransaction(String message) {
+		GenSig.sign(getSkey(), message);
+	}
+	
+	public void collectCoins(double pigcoins) {
+		for(Transaction trx:inputTransactions) {
+			trx.getPigcoings();
+		}
+		for(Transaction trx:outputTransactions) {
+			trx.getPigcoings();
+		}
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "\n"+
+				"Wallet = " + getAddress().hashCode() +
+				"\nTotal input = " + total_input +
+				"\nTotal output = " + total_output +
+				"\nBalance = " + balance +
+				"\n";
 	}
 }	
