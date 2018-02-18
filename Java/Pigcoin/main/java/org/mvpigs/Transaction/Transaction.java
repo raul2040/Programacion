@@ -14,7 +14,8 @@ public class Transaction {
 	private String message = null; // Mensaje que acompaña la transacción y que escribe el usuario que envía los pigcoins.
 	private byte[] signature = null; // Es el message firmado con la clave privada del usuario que genera (envía) la transacción.
 
-// ----- Constructor -----
+// ----- Constructores -----
+	
 	public Transaction() {
 	}
 

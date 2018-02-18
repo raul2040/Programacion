@@ -3,6 +3,7 @@ package org.mvpigs.Pigcoin;
 import java.security.KeyPair;
 import java.util.Map;
 
+import org.mvpigs.BlockChain.BlockChain;
 import org.mvpigs.GenSig.GenSig;
 import org.mvpigs.Transaction.Transaction;
 import org.mvpigs.Wallet.Wallet;

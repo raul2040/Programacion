@@ -1,7 +1,9 @@
 package org.mvpigs.BlockChain;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 
+import org.mvpigs.GenSig.GenSig;
 import org.mvpigs.Transaction.Transaction;
 
 public class BlockChain {
@@ -9,6 +11,7 @@ public class BlockChain {
 // ----- Atributos -----
 	
 	private ArrayList<Transaction> blockChain = new ArrayList<Transaction>();
+	private int pigcoin = 0;
 	
 // ----- Lógica -----
 	
@@ -16,8 +19,18 @@ public class BlockChain {
 		blockChain.add(transaction);
 	}
 	
-	
-	
+	public void processTransactions(PublicKey pKey_sender, PublicKey pKey_recipient, double consumedCoins, String message , byte[] signedTransaction) {
+		GenSig.verify(pKey_sender, message, signedTransaction);
+	}
 
-
+	public void summarize(int position) {
+		Transaction trx = blockChain.get(position);
+			System.out.println("\n"+ trx.toString()+"\n");
+		}
+	public void summarize() {
+		for(Transaction trx:blockChain) {
+			System.out.println("\n" + trx.toString() + "\n");
+		}
+	}
 }
+
