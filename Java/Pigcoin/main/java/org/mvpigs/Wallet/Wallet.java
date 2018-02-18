@@ -4,6 +4,8 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.mvpigs.BlockChain.BlockChain;
 import org.mvpigs.GenSig.GenSig;
@@ -119,19 +121,9 @@ public class Wallet {
 		blockChain.addOrigin(transaction);
 	}
 	
-	public void signTransaction(String message) {
-		GenSig.sign(getSkey(), message);
+	public byte[] signTransaction(String message) {
+		return GenSig.sign(getSkey(), message);
 	}
-	
-	public void collectCoins(double pigcoins) {
-		for(Transaction trx:inputTransactions) {
-			trx.getPigcoings();
-		}
-		for(Transaction trx:outputTransactions) {
-			trx.getPigcoings();
-		}
-	}
-	
 	
 	@Override
 	public String toString() {
@@ -142,4 +134,15 @@ public class Wallet {
 				"\nBalance = " + balance +
 				"\n";
 	}
+	
+   public Map<String, Double> collectCoins(double pigcoins){
+        Map<String, Double> consumedCoins = new HashMap<>();
+        for (Transaction trx: outputTransactions) {
+            consumedCoins.put(trx.getHash(), trx.getPigcoings());
+        }
+        for (Transaction trx: inputTransactions) {
+            consumedCoins.put(trx.getHash(), trx.getPigcoings());
+        }
+        return consumedCoins;
+}
 }	
