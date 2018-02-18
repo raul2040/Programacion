@@ -11,7 +11,16 @@ public class BlockChain {
 // ----- Atributos -----
 	
 	private ArrayList<Transaction> blockChain = new ArrayList<Transaction>();
-	private int pigcoin = 0;
+	
+// ----- Constructores -----
+	
+	public BlockChain() {
+	}
+	
+// ----- Setters y Getters
+	public ArrayList<Transaction> getBlockChain() {
+		return blockChain;
+	}
 	
 // ----- Lógica -----
 	
@@ -25,11 +34,12 @@ public class BlockChain {
 
 	public void summarize(int position) {
 		Transaction trx = blockChain.get(position);
-			System.out.println("\n"+ trx.toString()+"\n");
-		}
+			System.out.println(trx.toString());
+	}
+	
 	public void summarize() {
 		for(Transaction trx:blockChain) {
-			System.out.println("\n" + trx.toString() + "\n");
+			System.out.println(trx.toString());
 		}
 	}
 }

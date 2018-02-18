@@ -39,8 +39,28 @@ public class Wallet {
 		return this.skey;
 	}
 	
+	public ArrayList<Transaction> getInputTransactions() {
+		return inputTransactions;
+	}
+
+	public void setInputTransactions(ArrayList<Transaction> inputTransactions) {
+		this.inputTransactions = inputTransactions;
+	}
+	
+	public ArrayList<Transaction> getOutputTransactions() {
+		return outputTransactions;
+	}
+	
+	public void setOutputTransactions(ArrayList<Transaction> outputTransactions) {
+		this.outputTransactions = outputTransactions;
+	}
+	
+	
+	
+	
 // ----- Métodos -----
 	
+
 	public void  generateKeyPair() {
 		KeyPair pair = GenSig.generateKeyPair();
 		this.setSK(pair.getPrivate());
@@ -48,6 +68,15 @@ public class Wallet {
 	}
 	
 	public void loadCoins(BlockChain bChain) {
+		for (Transaction trx:bChain.getBlockChain()) {
+			if (trx.getPkey_recipient().hashCode() == address.hashCode()) {
+				total_input += trx.getPigcoings();
+			}
+			if (trx.getpKey_sender().hashCode() == address.hashCode()) {
+				total_output += trx.getPigcoings();	
+			}
+		balance = total_input - total_output;
+		}
 		
 	}
 	
@@ -59,5 +88,21 @@ public class Wallet {
 				"\nTotal output = " + total_output +
 				"\nBalance = " + balance +
 				"\n";
+	}
+
+	public void loadInputTransactions(BlockChain blockChain) {
+		for (Transaction trx:blockChain.getBlockChain()) {
+			if (trx.getPkey_recipient().hashCode() == getAddress().hashCode()) {
+				inputTransactions.add(trx);
+			}
+		}
+	}
+	
+	public void loadOutputTransactions(BlockChain blockChain) {
+		for (Transaction trx: blockChain.getBlockChain()) {
+			if (trx.getpKey_sender().hashCode() == getAddress().hashCode()) {
+				outputTransactions.add(trx);
+			}
+		}
 	}
 }	
