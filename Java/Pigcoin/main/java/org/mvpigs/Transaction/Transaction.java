@@ -10,9 +10,22 @@ public class Transaction {
 	private String prev_hash = null;
 	private PublicKey pKey_sender = null; // Dirección Pública de la wallet desde la que se envían los Pigcoins. Clave pública de la wallet.
 	private PublicKey pkey_recipient = null; // Es la dirección a la que se envían los Pigcoins. Clave pública de la wallet.
-	private int pigcoins = 0; // Cantidad de pigcoins que se envían
+	private double pigcoins = 0; // Cantidad de pigcoins que se envían
 	private String message = null; // Mensaje que acompaña la transacción y que escribe el usuario que envía los pigcoins.
 	private byte[] signature = null; // Es el message firmado con la clave privada del usuario que genera (envía) la transacción.
+
+// ----- Constructor -----
+	public Transaction() {
+	}
+
+	public Transaction(String hash, String prev_hash, PublicKey pKey_sender, PublicKey pKey_recipient, double pigcoins, String message) {
+		this.hash = hash;
+		this.prev_hash = prev_hash;
+		this.pKey_sender = pKey_sender;
+		this.pkey_recipient = pKey_recipient;
+		this.pigcoins = pigcoins;
+		this.message = message;
+	}
 	
 // ----- Setters y Getters ------
 
@@ -40,7 +53,7 @@ public class Transaction {
 	public void setPkey_recipient(PublicKey pkey_recipient) {
 		this.pkey_recipient = pkey_recipient;
 	}
-	public int getPigcoings() {
+	public double getPigcoings() {
 		return pigcoins;
 	}
 	public void setPigcoings(int pigcoings) {
@@ -60,6 +73,7 @@ public class Transaction {
 	}
 
 // ----- Métodos ------
+	
 	@Override
 	public String toString() {
 		return  "\n hash = "+ hash+
