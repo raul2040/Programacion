@@ -7,4 +7,10 @@ Dicho repositorio, contiene diversos proyectos, hechos en los siguientes lenguaj
 
 Siempre siguiendo los patrones de calidad establecidos en el presente curso:
 - S.O.L.I.D
-- Metodologías ágiles **TDD**
+- Uso de la TDD
+- Para eliminar el code smell.
+- Produciendo código open/close.
+- Creamos un código fácil de mantener y ampliable con el tiempo.
+- Control de versiones(git)
+- Debugging
+- Programación defensiva.
