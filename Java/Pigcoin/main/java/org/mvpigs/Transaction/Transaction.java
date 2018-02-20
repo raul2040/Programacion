@@ -77,12 +77,13 @@ public class Transaction {
 	
 	@Override
 	public String toString() {
-		return  "\n hash = "+ hash+
+		String message = "\n hash = "+ hash+
                 "\n prev_hash = "+ prev_hash+
                 "\n pKey_sender = "+ pKey_sender.hashCode()+
                 "\n pKey_recipient = "+ pkey_recipient.hashCode()+
                 "\n pigcoins = "+ pigcoins +
-                "\n message = "+ message;
+                "\n message = "+ getMessage();
+		return message;
 	}
 }
 

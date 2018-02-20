@@ -2,13 +2,11 @@ package org.mvpigs.Pigcoin.WalletTest;
 
 import static org.junit.Assert.assertEquals;
 
-import java.security.KeyPair;
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mvpigs.BlockChain.BlockChain;
-import org.mvpigs.GenSig.GenSig;
 import org.mvpigs.Transaction.Transaction;
 import org.mvpigs.Wallet.Wallet;
 
@@ -117,7 +115,7 @@ public class TestWallet {
 	
 	@Test
 	public void prueba() {
-		for(Transaction trx: blockChain) {
+		for(Transaction trx: bChain.getBlockChain()) {
 			System.out.println(trx.toString());
 		}
 	}
