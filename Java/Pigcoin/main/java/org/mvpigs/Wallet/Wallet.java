@@ -22,6 +22,8 @@ public class Wallet {
 	private double balance = 0; // Son los pigcoins que posee este usuario, balance = input - output, no puede ser negativo.
 	private ArrayList<Transaction> inputTransactions = new ArrayList<Transaction>();
 	private ArrayList<Transaction> outputTransactions = new ArrayList<Transaction>();
+	private ArrayList<Transaction> transaccionesConsumidas = new ArrayList<Transaction>();
+	private ArrayList<Transaction> ChangeAddress = new ArrayList<Transaction>();
 	
 // ----- Setters y Getters -----
 	
@@ -93,24 +95,31 @@ public class Wallet {
 				total_input += trx.getPigcoings();
 			}
 			if (trx.getpKey_sender().hashCode() == address.hashCode()) {
-				total_output += trx.getPigcoings();	
+				if (total_input >= total_output) {
+					total_output += trx.getPigcoings();	
+				}
 			}
-		setBalance();
 		}
 	}
 
 	public void loadInputTransactions(BlockChain blockChain) {
+		total_input = 0;
 		for (Transaction trx:blockChain.getBlockChain()) {
 			if (trx.getPkey_recipient().hashCode() == getAddress().hashCode()) {
 				inputTransactions.add(trx);
+				total_input += trx.getPigcoings();
+				setBalance();
 			}
 		}
 	}
 	
 	public void loadOutputTransactions(BlockChain blockChain) {
+		total_output = 0;
 		for (Transaction trx: blockChain.getBlockChain()) {
 			if (trx.getpKey_sender().hashCode() == getAddress().hashCode()) {
 				outputTransactions.add(trx);
+				total_output += trx.getPigcoings();
+				setBalance();
 			}
 		}
 	}
@@ -128,7 +137,7 @@ public class Wallet {
 	@Override
 	public String toString() {
 		return "\n"+
-				"Wallet = " + getAddress().hashCode() +
+				"\nWallet = " + getAddress().hashCode() +
 				"\nTotal input = " + total_input +
 				"\nTotal output = " + total_output +
 				"\nBalance = " + balance +
@@ -137,12 +146,15 @@ public class Wallet {
 	
    public Map<String, Double> collectCoins(double pigcoins){
         Map<String, Double> consumedCoins = new HashMap<>();
-        for (Transaction trx: outputTransactions) {
-            consumedCoins.put(trx.getHash(), trx.getPigcoings());
-        }
         for (Transaction trx: inputTransactions) {
-            consumedCoins.put(trx.getHash(), trx.getPigcoings());
+        	 if (trx.getHash().hashCode() == outputTransactions.get(0).hashCode()) {
+        		 consumedCoins.put(trx.toString(), pigcoins);
+        	 }
+        	 
+        	 if (pigcoins < trx.getPigcoings()) {
+        		double changeAddress =  pigcoins - trx.getPigcoings();
+        	 }
         }
-        return consumedCoins;
-}
+		return consumedCoins;
+   	}
 }	

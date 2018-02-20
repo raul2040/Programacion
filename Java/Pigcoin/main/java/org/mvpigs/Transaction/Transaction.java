@@ -84,6 +84,5 @@ public class Transaction {
                 "\n pigcoins = "+ pigcoins +
                 "\n message = "+ message;
 	}
-		
 }
 

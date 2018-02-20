@@ -2,6 +2,8 @@ package org.mvpigs.BlockChain;
 
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.mvpigs.GenSig.GenSig;
 import org.mvpigs.Transaction.Transaction;
@@ -29,8 +31,32 @@ public class BlockChain {
 		blockChain.add(transaction);
 	}
 	
-	public void processTransactions(PublicKey pKey_sender, PublicKey pKey_recipient, double consumedCoins, String message , byte[] signedTransaction) {
-		GenSig.verify(pKey_sender, message, signedTransaction);
+	public void processTransactions( PublicKey pKey_sender, PublicKey pKey_recipient, Map<String, Double> consumedCoins, String message , byte[] signedTransaction) {
+		if(isSignatureValid(pKey_sender, message, signedTransaction) && isConsumedCoinValid(consumedCoins)) {
+			createTransaction(pKey_sender, pKey_recipient, consumedCoins, message, signedTransaction);
+			
+		}
+	}
+	
+	private void createTransaction(PublicKey pKey_sender, PublicKey pKey_recipient, Map<String, Double> consumedCoins,String message, byte[] signedTransaction) {
+		double coins = 0;
+		for (Entry<String, Double> iterador: consumedCoins.entrySet()) {
+			coins = iterador.getValue();
+		}
+		Transaction trx = new Transaction();
+		trx = new Transaction(trx.getHash(), trx.getPrev_hash(),pKey_sender, pKey_recipient,coins, message);
+	}
+
+	public boolean isConsumedCoinValid(Map<String, Double> consumedCoins) {
+		for(Transaction trx: blockChain) {
+			for (Entry<String, Double> iterador: consumedCoins.entrySet()) {
+			String key = iterador.getKey();
+			if(key == trx.getHash()) {
+				return false;
+				}
+			}
+		}
+	return true;
 	}
 	
 	public boolean  isSignatureValid(PublicKey pKey_sender,String message, byte[] signedTransaction) {
@@ -55,20 +81,15 @@ public class BlockChain {
 		}
 	}
 	
+	
 	public void loadWallet(PublicKey address) {
-		Wallet wallet = new Wallet();
-		double input = wallet.getTotalInput();
-		double output = wallet.getTotalOutput();
-		for (Transaction trx:blockChain) {
-			if (trx.getPkey_recipient().hashCode() == address.hashCode()) {
-				input += trx.getPigcoings();
+		for(Transaction trx:blockChain) {
+			if(trx.getpKey_sender().hashCode() == address.hashCode()) {
+				loadInputTransactions(address);
 			}
-			if (trx.getpKey_sender().hashCode() == address.hashCode()) {
-				output += trx.getPigcoings();	
+			if(trx.getPkey_recipient().hashCode() == address.hashCode()) {
+				loadOutputTransactions(address);
 			}
-		wallet.setTotalInput(input);
-		wallet.setTotalOutput(output);
-		wallet.setBalance();
 		}
 	}
 
