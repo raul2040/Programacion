@@ -5,8 +5,6 @@ package org.mvpigs.kataNumerosRomanos;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,18 +28,18 @@ public class TestRomanNumbers {
 	
 	@Test
 	public void RomanNumberDecimal() {
-		assertEquals(RomanNumbers.I.decimal, 1);
-		assertEquals(RomanNumbers.V.decimal, 5);
-		assertEquals(RomanNumbers.X.decimal, 10);
-		assertEquals(RomanNumbers.C.decimal, 100);
-		assertEquals(RomanNumbers.D.decimal, 500);
-		assertEquals(RomanNumbers.M.decimal, 1000);
+		assertEquals(RomanNumbers.I.getDecimal(), 1);
+		assertEquals(RomanNumbers.V.getDecimal(), 5);
+		assertEquals(RomanNumbers.X.getDecimal(), 10);
+		assertEquals(RomanNumbers.C.getDecimal(), 100);
+		assertEquals(RomanNumbers.D.getDecimal(), 500);
+		assertEquals(RomanNumbers.M.getDecimal(), 1000);
 	}
 	
 	
 	@Test
 	public void testRomanNumbers() {
-		String regex = "(?<!C)[MD] ";
+		String regex = "(?<!C)[MD]|[CM] ";
 		String source = "MDIV";
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(source);

@@ -1,6 +1,5 @@
 package org.mvpigs.kataNumerosRomanos;
 
-import java.util.ArrayList;
 
 public enum RomanNumbers {
 //---- Enum Numbers ----
@@ -10,8 +9,8 @@ public enum RomanNumbers {
 	
 //---- Properties ----
 	
-	int decimal = 0;
-	private static ArrayList<RomanNumbers> numbers = new ArrayList<RomanNumbers>();
+	private int decimal = 0;
+
 	
 //---- Constructor ----	
 	
@@ -21,17 +20,10 @@ public enum RomanNumbers {
 	
 //---- Getters ----
 
-	public static ArrayList<RomanNumbers> getNumbers(){
-		return numbers;
-	}
-	
+
 	public int getDecimal() {
 		return this.decimal;
 	}
-
-//---- Methods ----
-	
-	
 
 }
 

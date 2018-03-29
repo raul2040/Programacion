@@ -1,23 +1,33 @@
 package org.mvpigs.kataNumerosRomanos;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RegexNumerosRomanos {
 
-  private static HashMap<String,String > regex = new HashMap<String,String>();
+  private HashMap<String,String > regexDiccionario = new HashMap<String,String>();
 
 // ---- Getters y Setters
   
-  		public static void addRegex(String key, String value) {
-            regex.put(key, value);
-        }
 
-        public static HashMap<String, String> getRegex() {
-           return regex;
-        }
+	public void addRegex(String key, String value) {
+		this.regexDiccionario.put(key, value);
+	}
 
-        public static String getRegexValue(String key) {
-            return regex.get(key);
-        }
+	public Map<String, String> getRegex() {
+		return this.regexDiccionario;
+	}
+
+	public String getRegexValue(String key) {
+		return this.regexDiccionario.get(key);
+	}
+
+	public Collection<String> getValues() {
+		return this.regexDiccionario.values();
+	}
+
+	public long longitud() {
+		return this.regexDiccionario.size();
+	}
 }
-
